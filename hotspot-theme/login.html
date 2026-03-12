@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول - شبكة الواي فاي</title>
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="expires" content="-1">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    $(if chap-id)
+    <form name="sendin" action="$(link-login-only)" method="post">
+        <input type="hidden" name="username" />
+        <input type="hidden" name="password" />
+        <input type="hidden" name="dst" value="$(link-orig)" />
+        <input type="hidden" name="popup" value="true" />
+    </form>
+    <script type="text/javascript" src="/md5.js"></script>
+    <script type="text/javascript">
+    function doLogin() {
+        document.sendin.username.value = document.login.username.value;
+        document.sendin.password.value = hexMD5('$(chap-id)' + document.login.password.value + '$(chap-challenge)');
+        document.sendin.submit();
+        return false;
+    }
+    </script>
+    $(endif)
+
+    <div class="background-container">
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+        <div class="circle circle-3"></div>
+    </div>
+
+    <div class="login-container">
+        <div class="glass-panel">
+            <div class="logo-container">
+                <div class="wifi-icon">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 21C10.8954 21 10 20.1046 10 19C10 17.8954 10.8954 17 12 17C13.1046 17 14 17.8954 14 19C14 20.1046 13.1046 21 12 21Z" />
+                        <path d="M7 14C8.32608 12.6739 10.125 11.9286 12 11.9286C13.875 11.9286 15.6739 12.6739 17 14" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M3.46448 10.4645C5.7297 8.19926 8.80218 6.92676 12.0055 6.92676C15.2088 6.92676 18.2813 8.19926 20.5465 10.4645" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M0 6.92896C3.1818 3.74715 7.49755 1.9596 12 1.9596C16.5025 1.9596 20.8182 3.74715 24 6.92896" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h1>مرحباً بك</h1>
+                <p>قم بتسجيل الدخول للاتصال بالإنترنت</p>
+            </div>
+
+            <form name="login" action="$(link-login-only)" method="post" $(if chap-id) onSubmit="return doLogin()" $(endif)>
+                <input type="hidden" name="dst" value="$(link-orig)" />
+                <input type="hidden" name="popup" value="true" />
+                
+                $(if error)
+                <div class="error-message">
+                    $(error)
+                </div>
+                $(endif)
+                
+                <div class="input-group">
+                    <label for="username">اسم المستخدم</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="username" name="username" placeholder="أدخل اسم المستخدم (رقم الكارت)" required value="$(username)">
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="password">كلمة المرور</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="password" name="password" placeholder="أدخل كلمة المرور (إن وجدت)">
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-login">اتصل الآن</button>
+            </form>
+
+            <div style="text-align: center; margin-top: 15px;">
+                $(if trial == 'yes')
+                <a href="$(link-login-only)?dst=$(link-orig-esc)&amp;username=T-$(mac-esc)" style="color: #60a5fa; text-decoration: none; font-size: 14px; font-weight: bold; border-bottom: 1px dashed #60a5fa; padding-bottom: 2px;">
+                    تجربة مجانية للإنترنت
+                </a>
+                $(endif)
+            </div>
+            
+            <div class="features">
+                <div class="feature">
+                    <span class="feature-icon">🚀</span>
+                    <span>إنترنت سريع</span>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">🔒</span>
+                    <span>تصفح آمن</span>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">⏱️</span>
+                    <span>بدون انقطاع</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script type="text/javascript">
+        document.login.username.focus();
+    </script>
+</body>
+</html>
